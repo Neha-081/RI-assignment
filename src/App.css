@@ -1,6 +1,7 @@
 /* Define the primary color variable */
 :root {
   --primary-color: #1DA1F2;
+  --gray-color: #ddd;
 }
 
 .App {
@@ -10,30 +11,5 @@
 main {
   /* position: relative; */
   padding-top: 100px; /* Adjust as needed based on your navbar height */
-}
-
-/* Style the plus sign button */
-.plus-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 30px;
-  width: 40px;
-  height: 40px;
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  /* Center the plus sign vertically and horizontally */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.plus-button:hover {
-  background-color: #0056b3;
 }
 

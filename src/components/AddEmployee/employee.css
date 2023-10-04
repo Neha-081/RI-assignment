@@ -1,0 +1,55 @@
+.main-container {
+    background-color: white;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid var(--gray-color);
+}
+
+.footer button {
+    margin: 15px 5px;
+    padding: 10px;
+    font-size: 14px;
+    width: 70px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn {
+    margin-left: auto !important;
+    background-color: #1DA1F220;
+    color: var(--primary-color);
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.left-inner-addon {
+    position: relative;
+    width: 250px;
+    margin: 15px;
+}
+
+.left-inner-addon input, select {
+    padding: 10px;
+    padding-left: 30px;
+    width: 100%;
+    border: 1px solid var(--gray-color);
+    border-radius: 5px;
+    outline: none;
+}
+.left-inner-addon img {
+    top: 5px;
+    position: absolute;
+    left: 5px;
+    pointer-events: none;
+}
+
