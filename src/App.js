@@ -1,21 +1,18 @@
 import './App.css';
-import noRecordsFound from '../src/assets/no-records.svg';
+import { useState } from 'react';
+import NoEmployee from './components/NoEmployee';
+import { Routes, Route } from 'react-router-dom';
+import AddEmployee from './components/AddEmployee';
 
 function App() {
+
   return (
     <div className="App">
-    <header>
-        <nav className="navbar">
-            <div className="container">
-                <p>Employee List</p>
-            </div>
-        </nav>
-    </header>
-    <main>
-       <img className='no-records' src={noRecordsFound} alt="no-records-img" />
-       <button className='plus-button'>+</button>
-    </main>
-    </div>
+    <Routes>
+      <Route path="/" element={<NoEmployee />} />
+      <Route path="/add-employee" element={<AddEmployee />} />
+    </Routes>
+  </div>
   );
 }
 

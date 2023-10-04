@@ -7,36 +7,9 @@
   text-align: center;
 }
 
-/* Style the fixed navbar */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: var(--primary-color);
-  color: #fff;
-  z-index: 100;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
-  font-weight: 500;
-  font-size: 22px;
-}
-
-
 main {
   /* position: relative; */
   padding-top: 100px; /* Adjust as needed based on your navbar height */
-}
-
-main .no-records {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /* Style the plus sign button */
