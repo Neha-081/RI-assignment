@@ -4,6 +4,7 @@ import "./employee.css";
 import UserImage from '../../assets/user.svg';
 import RoleImage from '../../assets/role.svg';
 import Dropdown from "../Dropdown";
+import Datepicker from "../Datepicker";
 
 const AddEmployee = () => {
 
@@ -18,6 +19,7 @@ const AddEmployee = () => {
       <img role="img" src={UserImage} />
   </div>
   <Dropdown />
+  <Datepicker/>
     </form>
     <footer className="footer">
         <button className="cancel-btn">Cancel</button>
