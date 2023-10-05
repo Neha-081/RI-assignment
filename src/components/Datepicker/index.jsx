@@ -11,6 +11,9 @@ const Datepicker = () => {
   const [isDateEnd, setIsDateEnd] = useState(false);
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");
+  console.log(selectedDayStart, "selectedDayStart");
+  console.log(selectedDayEnd, "selectedDayEnd");
+  console.log(isDateStart, "isDateStart");
 
   const handleDateFrom = (e) => {
     e.preventDefault();
@@ -58,6 +61,9 @@ const Datepicker = () => {
           onChange={setSelectedDayStart}
           shouldHighlightWeekends
           className="calendar"
+          colorPrimary="#1DA1F2"
+          calendarClassName="custom-calendar"
+      calendarTodayClassName="custom-today-day"
           renderFooter={() => (
             <div
               style={{
@@ -115,6 +121,9 @@ const Datepicker = () => {
           onChange={setSelectedDayEnd}
           shouldHighlightWeekends
           className="calendar"
+          colorPrimary="#1DA1F2"
+          calendarClassName="custom-calendar"
+          calendarTodayClassName="custom-today-day"
           renderFooter={() => (
             <div
               style={{
