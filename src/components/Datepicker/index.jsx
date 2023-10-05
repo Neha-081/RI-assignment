@@ -4,16 +4,11 @@ import { Calendar } from "@amir04lm26/react-modern-calendar-date-picker";
 import DateImage from "../../assets/date.svg";
 import "./date.css";
 
-const Datepicker = () => {
-  const [selectedDayStart, setSelectedDayStart] = useState(null);
-  const [selectedDayEnd, setSelectedDayEnd] = useState(null);
+const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEnd}) => {
   const [isDateStart, setIsDateStart] = useState(false);
   const [isDateEnd, setIsDateEnd] = useState(false);
   const [startDateValue, setStartDateValue] = useState("");
   const [endDateValue, setEndDateValue] = useState("");
-  console.log(selectedDayStart, "selectedDayStart");
-  console.log(selectedDayEnd, "selectedDayEnd");
-  console.log(isDateStart, "isDateStart");
 
   const handleDateFrom = (e) => {
     e.preventDefault();
@@ -58,12 +53,12 @@ const Datepicker = () => {
       {isDateStart && (
         <Calendar
           value={selectedDayStart}
-          onChange={setSelectedDayStart}
+          onChange={onChangeStart}
           shouldHighlightWeekends
           className="calendar"
           colorPrimary="#1DA1F2"
           calendarClassName="custom-calendar"
-      calendarTodayClassName="custom-today-day"
+          calendarTodayClassName="custom-today-day"
           renderFooter={() => (
             <div
               style={{
@@ -118,7 +113,7 @@ const Datepicker = () => {
       {isDateEnd && (
         <Calendar
           value={selectedDayEnd}
-          onChange={setSelectedDayEnd}
+          onChange={onChangeEnd}
           shouldHighlightWeekends
           className="calendar"
           colorPrimary="#1DA1F2"

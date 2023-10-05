@@ -9,14 +9,13 @@ const options = [
   { value: 'vanilla', label: 'Vanilla' },
 ];
 
-const Dropdown = ({selectedOption, onChange}) => {
+const Dropdown = ({selectedRole, onChange}) => {
   
-
   return (
     <div className='dropdown'>
         <img src={RoleImage} />
       <Select
-        defaultValue={selectedOption}
+        defaultValue={selectedRole}
         onChange={onChange}
         options={options}
         placeholder="Select role"
