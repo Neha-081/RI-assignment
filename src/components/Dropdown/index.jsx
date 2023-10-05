@@ -9,15 +9,15 @@ const options = [
   { value: 'vanilla', label: 'Vanilla' },
 ];
 
-const Dropdown = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const Dropdown = ({selectedOption, onChange}) => {
+  
 
   return (
     <div className='dropdown'>
         <img src={RoleImage} />
       <Select
         defaultValue={selectedOption}
-        onChange={setSelectedOption}
+        onChange={onChange}
         options={options}
         placeholder="Select role"
       />

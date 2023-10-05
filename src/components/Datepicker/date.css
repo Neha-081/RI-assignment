@@ -31,3 +31,15 @@
     font-size: 20px;
     margin: auto;
 }
+
+.Calendar__footer .left-date {
+ margin-right: auto;
+}
+
+.Calendar__footer img {
+   margin: 0 5px;
+
+}
+.Calendar__footer .date-name {
+    font-size: 15px;
+}
