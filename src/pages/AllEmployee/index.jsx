@@ -1,22 +1,24 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
 import noRecordsFound from "../../assets/no-records.svg";
-import "./noEmployee.css";
+import "./allEmployee.css";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
+import { useContext } from "react";
+import { AppContext } from "../../appContext";
 
-const NoEmployee = () => {
+const AllEmployee = () => {
+  const {allUsers} = useContext(AppContext);
   return (
     <div>
       <header>
-        <Navbar heading="Add Employee Details" />
+        <Navbar heading="Employee List" />
       </header>
       <main>
         <Link to="/add-employee"><Button text="+" /></Link>
-        <img className="no-records" src={noRecordsFound} alt="no-records-img" />
       </main>
     </div>
   );
 };
 
-export default NoEmployee;
+export default AllEmployee;

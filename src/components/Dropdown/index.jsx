@@ -4,9 +4,10 @@ import RoleImage from '../../assets/role.svg';
 import './dropdown.css';
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'product-designer', label: 'Product Designer' },
+  { value: 'flutter-developer', label: 'Flutter Developer' },
+  { value: 'qa-tester', label: 'QA Tester' },
+  { value: 'product-owner', label: 'Product Owner' },
 ];
 
 const Dropdown = ({selectedRole, onChange}) => {

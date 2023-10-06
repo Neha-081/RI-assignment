@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar";
 import "./employee.css";
 import UserImage from "../../assets/user.svg";
-import Dropdown from "../Dropdown";
-import Datepicker from "../Datepicker";
+import Dropdown from "../../components/Dropdown";
+import Datepicker from "../../components/Datepicker";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../appContext";
 
 const idb =
   window.indexedDB ||
@@ -39,7 +42,8 @@ const insertDataInIndexedDb = () => {
 };
 
 const AddEmployee = () => {
-  const [allUsers, setAllUsers] = useState([]);
+  const {allUsers, setAllUsers} = useContext(AppContext);
+  const navigate = useNavigate();
   const [addUser, setAddUser] = useState(true);
   const [editUser, setEditUser] = useState(false);
   const [employeeName, setEmployeeName] = useState("");
@@ -47,6 +51,7 @@ const AddEmployee = () => {
   const [selectedUser, setSelectedUser] = useState({});
   const [selectedDayStart, setSelectedDayStart] = useState(null);
   const [selectedDayEnd, setSelectedDayEnd] = useState(null);
+  console.log(allUsers,"allUsers");
 
   const handleRoleChange = (newOption) => {
     setSelectedRole(newOption);
@@ -146,6 +151,7 @@ const AddEmployee = () => {
     } else {
       alert("Please enter all details");
     }
+    navigate('/all-employee');
   };
 
   return (
