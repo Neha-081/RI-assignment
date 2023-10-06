@@ -41,24 +41,45 @@ const AllEmployee = () => {
     };
   };
 
-  console.log(allUsers,"allUsers");
   return (
     <div>
       <header>
         <Navbar heading="Employee List" />
       </header>
       <main>
-        <Link to="/add-employee"><Button text="+" /></Link>
+        <Link to="/add-employee">
+          <Button text="+" />
+        </Link>
         <div>
-         {allUsers?.map((employee) => (
-          <div key={employee.id} className="employee-box">
-            <p>{employee.employeeName}</p>
-            <p>{employee.selectedRole.label}</p>
-            <p>
-              <span>{formatDate(employee?.selectedDayStart)} - </span> <span> {formatDate(employee?.selectedDayEnd)}</span>
-              </p>
-          </div>
-         ))}
+          <div className="current-emp">Current Employees</div>
+          {allUsers?.map((employee) => (
+            <div key={employee.id} className="employee-box">
+              <h4>{employee.employeeName}</h4>
+              <p>{employee.selectedRole.label}</p>
+              {employee?.selectedDayEnd !== null ? (
+                <p>
+                  <span>
+                    {employee?.selectedDayStart &&
+                      formatDate(employee?.selectedDayStart)}{" "}
+                    -{" "}
+                  </span>{" "}
+                  <span>
+                    {" "}
+                    {employee?.selectedDayEnd &&
+                      formatDate(employee?.selectedDayEnd)}
+                  </span>
+                </p>
+              ) : (
+                <p>
+                  <span>
+                    From{" "}
+                    {employee?.selectedDayStart &&
+                      formatDate(employee?.selectedDayStart)}
+                  </span>
+                </p>
+              )}
+            </div>
+          ))}
         </div>
       </main>
     </div>

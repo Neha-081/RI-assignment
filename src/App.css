@@ -2,6 +2,8 @@
 :root {
   --primary-color: #1DA1F2;
   --gray-color: #ddd;
+  --dark-gray: #949C9E;
+  --primary-gray: #F2F2F2;
 }
 
 .App {
@@ -10,6 +12,6 @@
 
 main {
   /* position: relative; */
-  padding-top: 100px; /* Adjust as needed based on your navbar height */
+  padding-top: 80px; /* Adjust as needed based on your navbar height */
 }
 

@@ -64,6 +64,7 @@ const AddEmployee = () => {
 
   useEffect(() => {
     insertDataInIndexedDb();
+    getAllData();
   }, []);
 
   const getAllData = () => {
