@@ -16,7 +16,7 @@ const idb =
 
 const AllEmployee = () => {
   const [allUsers, setAllUsers] = useState([]);
-  console.log(allUsers, "allcjhevfjkjvemd");
+
 
   useEffect(() => {
     getAllData();
@@ -41,8 +41,28 @@ const AllEmployee = () => {
     };
   };
 
+  const deleteSelected = (user) => {
+    const dbPromise = idb.open("test-db", 1);
+
+    dbPromise.onsuccess = function () {
+      const db = dbPromise.result;
+      var tx = db.transaction("userData", "readwrite");
+      var userData = tx.objectStore("userData");
+      const deleteUser = userData.delete(user.id);
+
+      deleteUser.onsuccess = (query) => {
+        tx.oncomplete = function () {
+          db.close();
+        };
+        alert("User deleted!");
+        getAllData();
+      };
+    };
+  };
+  const edit="edit"
+
   return (
-    <div>
+    <div className="all-employees">
       <header>
         <Navbar heading="Employee List" />
       </header>
@@ -50,8 +70,8 @@ const AllEmployee = () => {
         <Link to="/add-employee">
           <Button text="+" />
         </Link>
-        <div>
           <div className="current-emp">Current Employees</div>
+        <div className="sub-container">
           {allUsers?.map((employee) => (
             <div key={employee.id} className="employee-box">
               <h4>{employee.employeeName}</h4>
@@ -78,8 +98,12 @@ const AllEmployee = () => {
                   </span>
                 </p>
               )}
+              <Link to="/add-employee" state={{ value: "edit", user: employee, employee: employee.employeeName, role: employee.selectedRole, start: employee.selectedDayStart, end: employee.selectedDayEnd}}><p className="edit-btn" >edit</p></Link>
+              
+              <p className="edit-btn" onClick={() => deleteSelected(employee)}>delete</p>
             </div>
           ))}
+          <div className="swipe-text">Swipe left to delete</div>
         </div>
       </main>
     </div>

@@ -3,6 +3,7 @@ import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import { Calendar } from "@amir04lm26/react-modern-calendar-date-picker";
 import DateImage from "../../assets/date.svg";
 import "./date.css";
+import { useEffect } from "react";
 
 const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEnd}) => {
   const [isDateStart, setIsDateStart] = useState(false);
@@ -20,14 +21,24 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
     setIsDateEnd(!isDateEnd);
     setIsDateStart(false);
   };
-  const handleStartDate = () => {
-    const startDate = `${selectedDayStart?.day}-${selectedDayStart?.month}-${selectedDayStart?.year}`;
+
+  const startDate = `${selectedDayStart?.day}-${selectedDayStart?.month}-${selectedDayStart?.year}`;
+  const endDate = `${selectedDayEnd?.day}-${selectedDayEnd?.month}-${selectedDayEnd?.year}`;
+
+  useEffect(() => {
+    setStartDateValue(startDate);
+  }, [selectedDayStart])
+
+  useEffect(() => {
+    setEndDateValue(endDate);
+  }, [selectedDayEnd])
+
+  const handleStartDateSubmit = () => {
     setStartDateValue(startDate);
     setIsDateStart(false);
   };
 
-  const handleEndDate = () => {
-    const endDate = `${selectedDayEnd?.day}-${selectedDayEnd?.month}-${selectedDayEnd?.year}`;
+  const handleEndDateSubmit = () => {
     setEndDateValue(endDate);
     setIsDateEnd(false);
   };
@@ -93,7 +104,7 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
               </button>
               <button
                 type="button"
-                onClick={handleStartDate}
+                onClick={handleStartDateSubmit}
                 style={{
                   border: "#0fbcf9",
                   color: "#fff",
@@ -153,7 +164,7 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
               </button>
               <button
                 type="button"
-                onClick={handleEndDate}
+                onClick={handleEndDateSubmit}
                 style={{
                   border: "#0fbcf9",
                   color: "#fff",

@@ -1,3 +1,10 @@
+.all-employees {
+    background-color: var(--primary-gray);
+}
+.sub-container {
+    background-color: white;
+    padding: 10px 0;
+}
 .employee-box {
     color: #323238;
     text-align: left;
@@ -16,6 +23,18 @@
     text-align: left;
     font-weight: 500;
     padding: 20px 10px;
-    background-color: var(--primary-gray);
     font-size: 16px;
+}
+
+.swipe-text {
+    font-size: 14px;
+    position: absolute;
+    bottom: 10px;
+    margin: 10px;
+    color: var(--dark-gray);
+}
+
+.edit-btn {
+    text-align: right;
+    color: var(--primary-color) !important;
 }

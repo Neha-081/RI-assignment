@@ -4,7 +4,7 @@ import "./employee.css";
 import UserImage from "../../assets/user.svg";
 import Dropdown from "../../components/Dropdown";
 import Datepicker from "../../components/Datepicker";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const idb =
   window.indexedDB ||
@@ -40,8 +40,10 @@ const insertDataInIndexedDb = () => {
 };
 
 const AddEmployee = () => {
+  const location = useLocation();
+  const { value, user, employee, role, start, end } = location.state;
   const navigate = useNavigate();
-  const [allUsers,setAllUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [addUser, setAddUser] = useState(true);
   const [editUser, setEditUser] = useState(false);
   const [employeeName, setEmployeeName] = useState("");
@@ -49,6 +51,17 @@ const AddEmployee = () => {
   const [selectedUser, setSelectedUser] = useState({});
   const [selectedDayStart, setSelectedDayStart] = useState(null);
   const [selectedDayEnd, setSelectedDayEnd] = useState(null);
+  console.log(employeeName, "employeeName");
+
+  useEffect(() => {
+    setAddUser(false);
+    setEditUser(true);
+    setSelectedUser(user);
+    setEmployeeName(employee);
+    setSelectedRole(role);
+    setSelectedDayStart(start);
+    setSelectedDayEnd(end);
+  }, [value]);
 
   const handleRoleChange = (newOption) => {
     setSelectedRole(newOption);
@@ -88,7 +101,7 @@ const AddEmployee = () => {
 
   const handleSubmit = (event) => {
     const dbPromise = idb.open("test-db", 1);
-    if (employeeName) {
+    if (employeeName && selectedRole && selectedDayStart && selectedDayEnd) {
       dbPromise.onsuccess = () => {
         const db = dbPromise.result;
 
@@ -147,7 +160,7 @@ const AddEmployee = () => {
     } else {
       alert("Please enter all details");
     }
-    navigate('/all-employee');
+    navigate("/all-employee");
   };
 
   return (
@@ -161,6 +174,7 @@ const AddEmployee = () => {
             type="text"
             placeholder="Employee name"
             onChange={(e) => setEmployeeName(e.target.value)}
+            value={employeeName}
           />
           <img role="img" src={UserImage} />
         </div>
@@ -177,7 +191,7 @@ const AddEmployee = () => {
           Cancel
         </button>
         <button className="save-btn" onClick={handleSubmit}>
-          Save
+          {editUser ? "Update" : "Save"}
         </button>
       </footer>
     </div>

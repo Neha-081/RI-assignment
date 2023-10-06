@@ -20,6 +20,7 @@ const Dropdown = ({selectedRole, onChange}) => {
         onChange={onChange}
         options={options}
         placeholder="Select role"
+        value={selectedRole}
       />
     </div>
   );
