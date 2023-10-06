@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { formatDate } from "../../utils";
 import { useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../../appContext";
 
 const idb =
   window.indexedDB ||
@@ -15,8 +17,8 @@ const idb =
   window.shimIndexedDB;
 
 const AllEmployee = () => {
+  const {setAddUser, setEditUser, setEmployeeName, setSelectedRole, setSelectedDayStart, setSelectedDayEnd, setSelectedUser} = useContext(AppContext);
   const [allUsers, setAllUsers] = useState([]);
-
 
   useEffect(() => {
     getAllData();
@@ -59,7 +61,16 @@ const AllEmployee = () => {
       };
     };
   };
-  const edit="edit"
+
+  const handleEditClick = (user) => {
+    setAddUser(false);
+    setEditUser(true);
+    setSelectedUser(user);
+    setEmployeeName(user.employeeName);
+    setSelectedRole(user.selectedRole);
+    setSelectedDayStart(user.selectedDayStart);
+    setSelectedDayEnd(user.selectedDayEnd);
+  }
 
   return (
     <div className="all-employees">
@@ -70,6 +81,8 @@ const AllEmployee = () => {
         <Link to="/add-employee">
           <Button text="+" />
         </Link>
+        {allUsers?.length !== 0 ? 
+        <>
           <div className="current-emp">Current Employees</div>
         <div className="sub-container">
           {allUsers?.map((employee) => (
@@ -98,13 +111,20 @@ const AllEmployee = () => {
                   </span>
                 </p>
               )}
-              <Link to="/add-employee" state={{ value: "edit", user: employee, employee: employee.employeeName, role: employee.selectedRole, start: employee.selectedDayStart, end: employee.selectedDayEnd}}><p className="edit-btn" >edit</p></Link>
+              {/* <Link to="/add-employee" className="edit-btn" state={{ value: "edit", user: employee, employee: employee.employeeName, role: employee.selectedRole, start: employee.selectedDayStart, end: employee.selectedDayEnd}}>✎</Link> */}
+              <p className="edit-btn" onClick={() => handleEditClick(employee)}>✎</p>
               
-              <p className="edit-btn" onClick={() => deleteSelected(employee)}>delete</p>
+              {/* <p className="edit-btn" onClick={(✎) => deleteSelected(employee)}>delete</p> */}
             </div>
           ))}
           <div className="swipe-text">Swipe left to delete</div>
         </div>
+        </> :
+        <main>
+        {/* <Link to="/add-employee"><Button text="+" /></Link> */}
+        <img className="no-records" src={noRecordsFound} alt="no-records-img" />
+      </main>
+}
       </main>
     </div>
   );

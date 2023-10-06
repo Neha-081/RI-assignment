@@ -5,6 +5,8 @@ import UserImage from "../../assets/user.svg";
 import Dropdown from "../../components/Dropdown";
 import Datepicker from "../../components/Datepicker";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../appContext";
 
 const idb =
   window.indexedDB ||
@@ -40,28 +42,28 @@ const insertDataInIndexedDb = () => {
 };
 
 const AddEmployee = () => {
-  const location = useLocation();
-  const { value, user, employee, role, start, end } = location.state;
-  const navigate = useNavigate();
-  const [allUsers, setAllUsers] = useState([]);
-  const [addUser, setAddUser] = useState(true);
-  const [editUser, setEditUser] = useState(false);
-  const [employeeName, setEmployeeName] = useState("");
-  const [selectedRole, setSelectedRole] = useState(null);
-  const [selectedUser, setSelectedUser] = useState({});
-  const [selectedDayStart, setSelectedDayStart] = useState(null);
-  const [selectedDayEnd, setSelectedDayEnd] = useState(null);
-  console.log(employeeName, "employeeName");
+  const {
+    // allUsers,
+    // setAllUsers,
+    addUser,
+    setAddUser,
+    editUser,
+    setEditUser,
+    selectedUser,
+    setSelectedUser,
+    employeeName, 
+    setEmployeeName,     
+    selectedRole,
+    setSelectedRole,
+    selectedDayStart,
+    setSelectedDayStart,
+    selectedDayEnd,
+    setSelectedDayEnd} = useContext(AppContext);
 
-  useEffect(() => {
-    setAddUser(false);
-    setEditUser(true);
-    setSelectedUser(user);
-    setEmployeeName(employee);
-    setSelectedRole(role);
-    setSelectedDayStart(start);
-    setSelectedDayEnd(end);
-  }, [value]);
+    const [allUsers, setAllUsers] = useState([])
+  const navigate = useNavigate();
+
+  const value = "add"
 
   const handleRoleChange = (newOption) => {
     setSelectedRole(newOption);
@@ -79,6 +81,7 @@ const AddEmployee = () => {
     insertDataInIndexedDb();
     getAllData();
   }, []);
+
 
   const getAllData = () => {
     const dbPromise = idb.open("test-db", 1);
@@ -160,13 +163,13 @@ const AddEmployee = () => {
     } else {
       alert("Please enter all details");
     }
-    navigate("/all-employee");
+    navigate("/");
   };
 
   return (
     <div className="main-container">
       <header>
-        <Navbar heading="Add Employee Details" />
+        <Navbar heading={value ? "Edit Employee Details" : "Add Employee Details"} />
       </header>
       <form style={{ paddingTop: "120px", margin: "auto" }}>
         <div className="left-inner-addon">

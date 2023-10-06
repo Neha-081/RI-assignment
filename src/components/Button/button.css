@@ -1,5 +1,6 @@
 /* Style the plus sign button */
 .button {
+  z-index: 10;
     position: fixed;
     bottom: 20px;
     right: 20px;
