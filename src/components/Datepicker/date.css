@@ -3,12 +3,12 @@
 }
 
 .left-inner-addon {
-    width: 200px;
+    /* width: 200px; */
 }
 
 .left-inner-addon button {
     font-size: 15px;
-    min-width: 150px;
+    min-width: 170px;
     height: 40px;
     background-color: white;
     border: 1px solid var(--gray-color);

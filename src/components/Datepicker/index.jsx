@@ -20,7 +20,6 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
     setIsDateEnd(!isDateEnd);
     setIsDateStart(false);
   };
-
   const handleStartDate = () => {
     const startDate = `${selectedDayStart?.day}-${selectedDayStart?.month}-${selectedDayStart?.year}`;
     setStartDateValue(startDate);
