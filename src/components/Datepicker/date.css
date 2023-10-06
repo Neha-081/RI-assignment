@@ -2,11 +2,8 @@
     display: flex;
 }
 
-.left-inner-addon {
-    /* width: 200px; */
-}
-
 .left-inner-addon button {
+    width: 100%;
     font-size: 15px;
     min-width: 170px;
     height: 40px;
@@ -16,7 +13,6 @@
     color: gray;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* Center the plus sign vertically and horizontally */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,32 +26,36 @@
 }
 
 .Calendar {
-    margin: auto;
+    margin: auto 20px;
     position: absolute;
     top: 25%;
-    left: 10%;
 }
 
 .Calendar__footer .left-date {
- margin-right: auto;
+    margin-right: auto;
 }
 
 .Calendar__footer img {
-   margin: 0 5px;
+    margin: 0 5px;
 
 }
+
 .Calendar__footer .date-name {
     font-size: 15px;
+    position: absolute;
+    top: 20px;
 }
+
 .custom-calendar {
     box-shadow: 0 1em 3em rgba(95, 134, 232, 0.3);
-  }
-  
-  .custom-today-day {
+}
+
+.custom-today-day {
     color: #e67e22 !important;
     border: 1px solid #e67e22 !important;
-  }
-  
-  .custom-today-day::after {
-    visibility: hidden; /* hide small border under the text */
-  }
+}
+
+.custom-today-day::after {
+    visibility: hidden;
+    /* hide small border under the text */
+}

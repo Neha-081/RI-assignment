@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import noRecordsFound from "../../assets/no-records.svg";
 import "./allEmployee.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { formatDate } from "../../utils";
 import { useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../appContext";
+import { toast } from "react-toastify";
 
 const idb =
   window.indexedDB ||
@@ -56,7 +57,7 @@ const AllEmployee = () => {
         tx.oncomplete = function () {
           db.close();
         };
-        alert("User deleted!");
+        toast.error("User Delted!")
         getAllData();
       };
     };
@@ -72,6 +73,17 @@ const AllEmployee = () => {
     setSelectedDayEnd(user.selectedDayEnd);
   }
 
+  const handleAddClick = () => {
+    setAddUser(true);
+    setEditUser(false);
+    setSelectedUser({});
+    setEmployeeName("");
+    setSelectedRole(null);
+    setSelectedDayStart(null);
+    setSelectedDayEnd(null);
+  }
+
+
   return (
     <div className="all-employees">
       <header>
@@ -79,7 +91,7 @@ const AllEmployee = () => {
       </header>
       <main>
         <Link to="/add-employee">
-          <Button text="+" />
+          <Button text="+" onClick={handleAddClick} />
         </Link>
         {allUsers?.length !== 0 ? 
         <>
@@ -111,8 +123,7 @@ const AllEmployee = () => {
                   </span>
                 </p>
               )}
-              {/* <Link to="/add-employee" className="edit-btn" state={{ value: "edit", user: employee, employee: employee.employeeName, role: employee.selectedRole, start: employee.selectedDayStart, end: employee.selectedDayEnd}}>✎</Link> */}
-              <p className="edit-btn" onClick={() => handleEditClick(employee)}>✎</p>
+              <Link to="/add-employee" className="edit-btn" onClick={() => handleEditClick(employee)}>✎</Link>
               
               {/* <p className="edit-btn" onClick={(✎) => deleteSelected(employee)}>delete</p> */}
             </div>

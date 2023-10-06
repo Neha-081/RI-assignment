@@ -25,13 +25,17 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
   const startDate = `${selectedDayStart?.day}-${selectedDayStart?.month}-${selectedDayStart?.year}`;
   const endDate = `${selectedDayEnd?.day}-${selectedDayEnd?.month}-${selectedDayEnd?.year}`;
 
-  // useEffect(() => {
-  //   setStartDateValue(startDate);
-  // }, [selectedDayStart])
+  useEffect(() => {
+    if (selectedDayStart !== null) {
+    setStartDateValue(startDate);
+    }
+  }, [selectedDayStart])
 
-  // useEffect(() => {
-  //   setEndDateValue(endDate);
-  // }, [selectedDayEnd])
+  useEffect(() => {
+    if (selectedDayEnd !== null) {
+    setEndDateValue(endDate);
+    }
+  }, [selectedDayEnd])
 
   const handleStartDateSubmit = () => {
     setStartDateValue(startDate);

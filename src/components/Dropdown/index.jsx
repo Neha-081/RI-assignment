@@ -21,6 +21,7 @@ const Dropdown = ({selectedRole, onChange}) => {
         options={options}
         placeholder="Select role"
         value={selectedRole}
+        style={{width: '100%'}}  
       />
     </div>
   );

@@ -4,9 +4,10 @@ import "./employee.css";
 import UserImage from "../../assets/user.svg";
 import Dropdown from "../../components/Dropdown";
 import Datepicker from "../../components/Datepicker";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../appContext";
+import { toast } from "react-toastify";
 
 const idb =
   window.indexedDB ||
@@ -125,7 +126,7 @@ const AddEmployee = () => {
             tx.oncomplete = function () {
               db.close();
             };
-            alert("User added!");
+            toast.success("User added!");
             setEmployeeName("");
             setSelectedRole(null);
             setSelectedDayStart(null);
@@ -148,7 +149,7 @@ const AddEmployee = () => {
             tx.oncomplete = function () {
               db.close();
             };
-            alert("User updated!");
+            toast.success("User updated!");
             setEmployeeName("");
             setSelectedRole(null);
             setSelectedDayStart(null);
@@ -160,10 +161,10 @@ const AddEmployee = () => {
           };
         }
       };
+      navigate("/");
     } else {
-      alert("Please enter all details");
+      toast.warning("Please enter all details");
     }
-    navigate("/");
   };
 
   return (
@@ -171,7 +172,7 @@ const AddEmployee = () => {
       <header>
         <Navbar heading={value ? "Edit Employee Details" : "Add Employee Details"} />
       </header>
-      <form style={{ paddingTop: "120px", margin: "auto" }}>
+      <form>
         <div className="left-inner-addon">
           <input
             type="text"
@@ -190,7 +191,7 @@ const AddEmployee = () => {
         />
       </form>
       <footer className="footer">
-        <button className="cancel-btn" onClick={() => getAllData()}>
+        <button className="cancel-btn" onClick={() => navigate("/")}>
           Cancel
         </button>
         <button className="save-btn" onClick={handleSubmit}>
