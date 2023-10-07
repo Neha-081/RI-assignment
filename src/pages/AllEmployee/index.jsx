@@ -9,6 +9,14 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../appContext";
 import { toast } from "react-toastify";
+import trashImage from '../../assets/trash.svg';
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
 const idb =
   window.indexedDB ||
@@ -18,11 +26,19 @@ const idb =
   window.shimIndexedDB;
 
 const AllEmployee = () => {
-  const {setAddUser, setEditUser, setEmployeeName, setSelectedRole, setSelectedDayStart, setSelectedDayEnd, setSelectedUser} = useContext(AppContext);
+  const {
+    setAddUser,
+    setEditUser,
+    setEmployeeName,
+    setSelectedRole,
+    setSelectedDayStart,
+    setSelectedDayEnd,
+    setSelectedUser,
+  } = useContext(AppContext);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-    getAllData();
+    getAllData(setAllUsers);
   }, []);
 
   const getAllData = () => {
@@ -57,7 +73,7 @@ const AllEmployee = () => {
         tx.oncomplete = function () {
           db.close();
         };
-        toast.error("User Delted!")
+        toast.error("User Delted!");
         getAllData();
       };
     };
@@ -71,7 +87,7 @@ const AllEmployee = () => {
     setSelectedRole(user.selectedRole);
     setSelectedDayStart(user.selectedDayStart);
     setSelectedDayEnd(user.selectedDayEnd);
-  }
+  };
 
   const handleAddClick = () => {
     setAddUser(true);
@@ -81,8 +97,20 @@ const AllEmployee = () => {
     setSelectedRole(null);
     setSelectedDayStart(null);
     setSelectedDayEnd(null);
-  }
+  };
 
+  const trailingActions = () => (
+    <TrailingActions>
+      <SwipeAction
+        destructive={false}
+        onClick={() => console.info("swipe action triggered")}
+      >
+        <div className="swipe-dlt">
+        <img src={trashImage} alt="trash" />
+        </div>
+      </SwipeAction>
+    </TrailingActions>
+  );
 
   return (
     <div className="all-employees">
@@ -93,49 +121,70 @@ const AllEmployee = () => {
         <Link to="/add-employee">
           <Button text="+" onClick={handleAddClick} />
         </Link>
-        {allUsers?.length !== 0 ? 
-        <>
-          <div className="current-emp">Current Employees</div>
-        <div className="sub-container">
-          {allUsers?.map((employee) => (
-            <div key={employee.id} className="employee-box">
-              <h4>{employee.employeeName}</h4>
-              <p>{employee.selectedRole.label}</p>
-              {employee?.selectedDayEnd !== null ? (
-                <p>
-                  <span>
-                    {employee?.selectedDayStart &&
-                      formatDate(employee?.selectedDayStart)}{" "}
-                    -{" "}
-                  </span>{" "}
-                  <span>
-                    {" "}
-                    {employee?.selectedDayEnd &&
-                      formatDate(employee?.selectedDayEnd)}
-                  </span>
-                </p>
-              ) : (
-                <p>
-                  <span>
-                    From{" "}
-                    {employee?.selectedDayStart &&
-                      formatDate(employee?.selectedDayStart)}
-                  </span>
-                </p>
-              )}
-              <Link to="/add-employee" className="edit-btn" onClick={() => handleEditClick(employee)}>✎</Link>
-              
-              {/* <p className="edit-btn" onClick={(✎) => deleteSelected(employee)}>delete</p> */}
+        {allUsers?.length !== 0 ? (
+          <>
+            <div className="current-emp">Current Employees</div>
+            <div className="sub-container">
+              {allUsers?.map((employee) => (
+                <SwipeableList>
+                  <SwipeableListItem
+                    trailingActions={trailingActions()}
+                  >
+                    <div key={employee.id} className="employee-box">
+                      <h4>{employee.employeeName}</h4>
+                      <p>{employee.selectedRole.label}</p>
+                      {employee?.selectedDayEnd !== null ? (
+                        <p>
+                          <span>
+                            {employee?.selectedDayStart &&
+                              formatDate(employee?.selectedDayStart)}{" "}
+                            -{" "}
+                          </span>{" "}
+                          <span>
+                            {" "}
+                            {employee?.selectedDayEnd &&
+                              formatDate(employee?.selectedDayEnd)}
+                          </span>
+                        </p>
+                      ) : (
+                        <p>
+                          <span>
+                            From{" "}
+                            {employee?.selectedDayStart &&
+                              formatDate(employee?.selectedDayStart)}
+                          </span>
+                        </p>
+                      )}
+                      <Link
+                        to="/add-employee"
+                        className="edit-btn"
+                        onClick={() => handleEditClick(employee)}
+                      >
+                        ✎
+                      </Link>
+
+                      {/* <p
+                        className="edit-btn"
+                        onClick={() => deleteSelected(employee)}
+                      >
+                        delete
+                      </p> */}
+                    </div>
+                  </SwipeableListItem>
+                </SwipeableList>
+              ))}
+              <div className="swipe-text">Swipe left to delete</div>
             </div>
-          ))}
-          <div className="swipe-text">Swipe left to delete</div>
-        </div>
-        </> :
-        <main>
-        {/* <Link to="/add-employee"><Button text="+" /></Link> */}
-        <img className="no-records" src={noRecordsFound} alt="no-records-img" />
-      </main>
-}
+          </>
+        ) : (
+          <main>
+            <img
+              className="no-records"
+              src={noRecordsFound}
+              alt="no-records-img"
+            />
+          </main>
+        )}
       </main>
     </div>
   );

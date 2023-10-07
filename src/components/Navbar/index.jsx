@@ -1,5 +1,6 @@
 import React from "react";
 import './navbar.css';
+import trashImage from '../../assets/trash.svg';
 
 const Navbar = ({heading}) => {
 

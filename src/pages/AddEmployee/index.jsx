@@ -4,7 +4,7 @@ import "./employee.css";
 import UserImage from "../../assets/user.svg";
 import Dropdown from "../../components/Dropdown";
 import Datepicker from "../../components/Datepicker";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../appContext";
 import { toast } from "react-toastify";
@@ -44,12 +44,9 @@ const insertDataInIndexedDb = () => {
 
 const AddEmployee = () => {
   const {
-    // allUsers,
-    // setAllUsers,
     addUser,
     setAddUser,
     editUser,
-    setEditUser,
     selectedUser,
     setSelectedUser,
     employeeName, 
@@ -63,8 +60,6 @@ const AddEmployee = () => {
 
     const [allUsers, setAllUsers] = useState([])
   const navigate = useNavigate();
-
-  const value = "add"
 
   const handleRoleChange = (newOption) => {
     setSelectedRole(newOption);
@@ -170,7 +165,7 @@ const AddEmployee = () => {
   return (
     <div className="main-container">
       <header>
-        <Navbar heading={value ? "Edit Employee Details" : "Add Employee Details"} />
+        <Navbar heading={editUser ? "Edit Employee Details" : "Add Employee Details"} />
       </header>
       <form>
         <div className="left-inner-addon">

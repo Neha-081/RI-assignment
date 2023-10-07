@@ -57,5 +57,4 @@
 
 .custom-today-day::after {
     visibility: hidden;
-    /* hide small border under the text */
 }

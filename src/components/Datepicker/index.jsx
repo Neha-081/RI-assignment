@@ -134,6 +134,7 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
           calendarClassName="custom-calendar"
           calendarTodayClassName="custom-today-day"
           renderFooter={() => (
+            <>
             <div
               style={{
                 display: "flex",
@@ -181,6 +182,23 @@ const Datepicker = ({selectedDayStart, selectedDayEnd, onChangeStart, onChangeEn
                 Save
               </button>
             </div>
+            <div>
+              <button
+                type="button"
+                onClick={handleEndDateSubmit}
+                style={{
+                  border: "#0fbcf9",
+                  color: "#fff",
+                  borderRadius: "0.5rem",
+                  padding: "10px 15px",
+                  backgroundColor: "#1DA1F2",
+                  margin: "5px",
+                }}
+              >
+                Save
+              </button>
+            </div>
+            </>
           )}
         />
       )}
