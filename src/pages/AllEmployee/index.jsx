@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import noRecordsFound from "../../assets/no-records.svg";
 import "./allEmployee.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import { formatDate } from "../../utils";
 import { useState } from "react";
@@ -18,6 +18,7 @@ import {
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 
+// IndexedDB initialization
 const idb =
   window.indexedDB ||
   window.mozIndexedDB ||
@@ -26,6 +27,7 @@ const idb =
   window.shimIndexedDB;
 
 const AllEmployee = () => {
+  // Use context to access shared state and functions
   const {
     setAddUser,
     setEditUser,
@@ -35,12 +37,15 @@ const AllEmployee = () => {
     setSelectedDayEnd,
     setSelectedUser,
   } = useContext(AppContext);
+
   const [allUsers, setAllUsers] = useState([]);
 
+  // Retrieve all data from IndexedDB on component mount
   useEffect(() => {
     getAllData(setAllUsers);
   }, []);
 
+  // Function to retrieve all data from IndexedDB
   const getAllData = () => {
     const dbPromise = idb.open("test-db", 1);
     dbPromise.onsuccess = () => {
@@ -60,6 +65,7 @@ const AllEmployee = () => {
     };
   };
 
+  // Function to delete a selected user
   const deleteSelected = (user) => {
     const dbPromise = idb.open("test-db", 1);
 
@@ -73,12 +79,13 @@ const AllEmployee = () => {
         tx.oncomplete = function () {
           db.close();
         };
-        toast.error("User Delted!");
+        toast.error("User Deleted!");
         getAllData();
       };
     };
   };
 
+  // Function to handle clicking the edit button for a user
   const handleEditClick = (user) => {
     setAddUser(false);
     setEditUser(true);
@@ -89,6 +96,7 @@ const AllEmployee = () => {
     setSelectedDayEnd(user.selectedDayEnd);
   };
 
+  // Function to handle clicking the add button
   const handleAddClick = () => {
     setAddUser(true);
     setEditUser(false);
@@ -99,11 +107,12 @@ const AllEmployee = () => {
     setSelectedDayEnd(null);
   };
 
-  const trailingActions = () => (
+  // Function to render trailing actions for swipeable list items
+  const trailingActions = (user) => (
     <TrailingActions>
       <SwipeAction
-        destructive={false}
-        onClick={() => console.info("swipe action triggered")}
+        destructive={true}
+        onClick={() => deleteSelected(user)}
       >
         <div className="swipe-dlt">
         <img src={trashImage} alt="trash" />
@@ -115,22 +124,25 @@ const AllEmployee = () => {
   return (
     <div className="all-employees">
       <header>
+        {/* Display the Navbar with a static heading */}
         <Navbar heading="Employee List" />
       </header>
       <main>
         <Link to="/add-employee">
+          {/* Render an add button */}
           <Button text="+" onClick={handleAddClick} />
         </Link>
         {allUsers?.length !== 0 ? (
           <>
             <div className="current-emp">Current Employees</div>
             <div className="sub-container">
+              {/* Map through and render employee details */}
               {allUsers?.map((employee) => (
-                <SwipeableList>
+                <SwipeableList key={employee.id}>
                   <SwipeableListItem
-                    trailingActions={trailingActions()}
+                    trailingActions={trailingActions(employee)}
                   >
-                    <div key={employee.id} className="employee-box">
+                    <div className="employee-box">
                       <h4>{employee.employeeName}</h4>
                       <p>{employee.selectedRole.label}</p>
                       {employee?.selectedDayEnd !== null ? (
@@ -162,22 +174,16 @@ const AllEmployee = () => {
                       >
                         ✎
                       </Link>
-
-                      {/* <p
-                        className="edit-btn"
-                        onClick={() => deleteSelected(employee)}
-                      >
-                        delete
-                      </p> */}
                     </div>
                   </SwipeableListItem>
                 </SwipeableList>
               ))}
-              <div className="swipe-text">Swipe left to delete</div>
             </div>
+              <div className="swipe-text">Swipe left to delete</div>
           </>
         ) : (
           <main>
+            {/* Display a message when no records are found */}
             <img
               className="no-records"
               src={noRecordsFound}

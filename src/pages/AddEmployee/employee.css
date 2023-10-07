@@ -50,7 +50,8 @@
     margin: 10px;
 }
 
-.left-inner-addon input, select {
+.left-inner-addon input,
+select {
     padding: 12px;
     padding-left: 30px;
     width: 100%;
@@ -59,10 +60,10 @@
     outline: none;
     font-size: 15px;
 }
+
 .left-inner-addon img {
     top: 8px;
     position: absolute;
     left: 5px;
     pointer-events: none;
 }
-

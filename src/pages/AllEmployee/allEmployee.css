@@ -1,13 +1,14 @@
 .all-employees {
     background-color: var(--primary-gray);
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
+
 .sub-container {
     background-color: white;
 }
 
-.sub-container .swipeable-list {
-    /* padding: 10px 0; */
-}
 .employee-box {
     width: 100%;
     position: relative;

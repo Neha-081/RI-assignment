@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { AppContext } from "../../appContext";
 import { toast } from "react-toastify";
 
+// IndexedDB initialization and data insertion function
 const idb =
   window.indexedDB ||
   window.mozIndexedDB ||
@@ -17,12 +18,13 @@ const idb =
   window.shimIndexedDB;
 
 const insertDataInIndexedDb = () => {
-  //check for support
+  // Check for IndexedDB support
   if (!idb) {
     console.log("This browser doesn't support IndexedDB");
     return;
   }
 
+  // Open the IndexedDB database
   const request = idb.open("test-db", 1);
 
   request.onerror = function (event) {
@@ -36,7 +38,6 @@ const insertDataInIndexedDb = () => {
     const db = request.result;
 
     var tx = db.transaction("userData", "readwrite");
-    var userData = tx.objectStore("userData");
 
     return tx.complete;
   };
@@ -49,36 +50,41 @@ const AddEmployee = () => {
     editUser,
     selectedUser,
     setSelectedUser,
-    employeeName, 
-    setEmployeeName,     
+    employeeName,
+    setEmployeeName,
     selectedRole,
     setSelectedRole,
     selectedDayStart,
     setSelectedDayStart,
     selectedDayEnd,
-    setSelectedDayEnd} = useContext(AppContext);
+    setSelectedDayEnd
+  } = useContext(AppContext);
 
-    const [allUsers, setAllUsers] = useState([])
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
 
+  // Handle role change
   const handleRoleChange = (newOption) => {
     setSelectedRole(newOption);
   };
 
+  // Handle start date change
   const handleStartDateChange = (newDate) => {
     setSelectedDayStart(newDate);
   };
 
+  // Handle end date change
   const handleEndDateChange = (newDate) => {
     setSelectedDayEnd(newDate);
   };
 
+  // Insert data in IndexedDB and retrieve all data on component mount
   useEffect(() => {
     insertDataInIndexedDb();
     getAllData();
   }, []);
 
-
+  // Retrieve all data from IndexedDB
   const getAllData = () => {
     const dbPromise = idb.open("test-db", 1);
     dbPromise.onsuccess = () => {
@@ -98,9 +104,10 @@ const AddEmployee = () => {
     };
   };
 
+  // Handle form submission
   const handleSubmit = (event) => {
     const dbPromise = idb.open("test-db", 1);
-    if (employeeName && selectedRole && selectedDayStart && selectedDayEnd) {
+    if (employeeName && selectedRole && selectedDayStart) {
       dbPromise.onsuccess = () => {
         const db = dbPromise.result;
 
@@ -162,9 +169,11 @@ const AddEmployee = () => {
     }
   };
 
+  // Render the AddEmployee component
   return (
     <div className="main-container">
       <header>
+        {/* Display the Navbar with a dynamic heading */}
         <Navbar heading={editUser ? "Edit Employee Details" : "Add Employee Details"} />
       </header>
       <form>
@@ -175,8 +184,9 @@ const AddEmployee = () => {
             onChange={(e) => setEmployeeName(e.target.value)}
             value={employeeName}
           />
-          <img role="img" src={UserImage} />
+          <img src={UserImage} alt="User" />
         </div>
+        {/* Render the Dropdown and Datepicker components */}
         <Dropdown selectedRole={selectedRole} onChange={handleRoleChange} />
         <Datepicker
           selectedDayStart={selectedDayStart}
@@ -186,6 +196,7 @@ const AddEmployee = () => {
         />
       </form>
       <footer className="footer">
+        {/* Navigation buttons */}
         <button className="cancel-btn" onClick={() => navigate("/")}>
           Cancel
         </button>

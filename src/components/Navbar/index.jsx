@@ -1,17 +1,15 @@
 import React from "react";
 import './navbar.css';
-import trashImage from '../../assets/trash.svg';
 
-const Navbar = ({heading}) => {
-
+const Navbar = ({ heading }) => {
     return (
         <nav className="navbar">
-        <div className="container">
-            <p>{heading}</p>
-        </div>
-    </nav>
-
-    )
+            <div className="container">
+                {/* Display the heading provided as a prop */}
+                <p>{heading}</p>
+            </div>
+        </nav>
+    );
 }
 
 export default Navbar;
