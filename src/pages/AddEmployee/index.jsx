@@ -32,6 +32,19 @@ const insertDataInIndexedDb = () => {
     console.error(event);
   };
 
+  request.onupgradeneeded = function (event) {
+    console.log(event);
+    const db = request.result;
+
+    if (!db.objectStoreNames.contains("userData")) {
+      const objectStore = db.createObjectStore("userData", { keyPath: "id" });
+
+      objectStore.createIndex("employee", "employee", {
+        unique: false,
+      });
+    }
+  };
+
   request.onsuccess = function () {
     console.log("Database opened successfully");
 
