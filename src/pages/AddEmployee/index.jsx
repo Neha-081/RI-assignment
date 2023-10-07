@@ -17,45 +17,6 @@ const idb =
   window.msIndexedDB ||
   window.shimIndexedDB;
 
-const insertDataInIndexedDb = () => {
-  // Check for IndexedDB support
-  if (!idb) {
-    console.log("This browser doesn't support IndexedDB");
-    return;
-  }
-
-  // Open the IndexedDB database
-  const request = idb.open("test-db", 1);
-
-  request.onerror = function (event) {
-    console.error("An error occurred with IndexedDB");
-    console.error(event);
-  };
-
-  request.onupgradeneeded = function (event) {
-    console.log(event);
-    const db = request.result;
-
-    if (!db.objectStoreNames.contains("userData")) {
-      const objectStore = db.createObjectStore("userData", { keyPath: "id" });
-
-      objectStore.createIndex("employee", "employee", {
-        unique: false,
-      });
-    }
-  };
-
-  request.onsuccess = function () {
-    console.log("Database opened successfully");
-
-    const db = request.result;
-
-    var tx = db.transaction("userData", "readwrite");
-
-    return tx.complete;
-  };
-};
-
 const AddEmployee = () => {
   const {
     addUser,
@@ -72,9 +33,34 @@ const AddEmployee = () => {
     selectedDayEnd,
     setSelectedDayEnd
   } = useContext(AppContext);
+    
+   const [allUsers, setAllUsers] = useState([]);
+   const navigate = useNavigate();
 
-  const [allUsers, setAllUsers] = useState([]);
-  const navigate = useNavigate();
+    // Insert data in IndexedDB and retrieve all data on component mount
+    useEffect(() => {
+      getAllData();
+    }, []);
+
+      // Retrieve all data from IndexedDB
+      const getAllData = () => {
+        const dbPromise = idb.open("test-db1", 1);
+        dbPromise.onsuccess = () => {
+          const db = dbPromise.result;
+    
+          var tx = db.transaction("userData", "readonly");
+          var userData = tx.objectStore("userData");
+          const users = userData.getAll();
+    
+          users.onsuccess = (query) => {
+            setAllUsers(query.srcElement.result);
+          };
+    
+          tx.oncomplete = function () {
+            db.close();
+          };
+        };
+      };
 
   // Handle role change
   const handleRoleChange = (newOption) => {
@@ -91,35 +77,10 @@ const AddEmployee = () => {
     setSelectedDayEnd(newDate);
   };
 
-  // Insert data in IndexedDB and retrieve all data on component mount
-  useEffect(() => {
-    insertDataInIndexedDb();
-    getAllData();
-  }, []);
-
-  // Retrieve all data from IndexedDB
-  const getAllData = () => {
-    const dbPromise = idb.open("test-db", 1);
-    dbPromise.onsuccess = () => {
-      const db = dbPromise.result;
-
-      var tx = db.transaction("userData", "readonly");
-      var userData = tx.objectStore("userData");
-      const users = userData.getAll();
-
-      users.onsuccess = (query) => {
-        setAllUsers(query.srcElement.result);
-      };
-
-      tx.oncomplete = function () {
-        db.close();
-      };
-    };
-  };
 
   // Handle form submission
   const handleSubmit = (event) => {
-    const dbPromise = idb.open("test-db", 1);
+    const dbPromise = idb.open("test-db1", 1);
     if (employeeName && selectedRole && selectedDayStart) {
       dbPromise.onsuccess = () => {
         const db = dbPromise.result;

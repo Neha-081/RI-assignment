@@ -26,6 +26,43 @@ const idb =
   window.msIndexedDB ||
   window.shimIndexedDB;
 
+const insertDataInIndexedDb = () => {
+  //check for support
+  if (!idb) {
+    console.log("This browser doesn't support IndexedDB");
+    return;
+  }
+  const request = idb.open("test-db1", 1);
+  console.log(request,"request");
+
+  request.onupgradeneeded = function (event) {
+    console.log(event);
+    const db = request.result;
+
+    console.log(db,"db");
+    if (!db.objectStoreNames.contains('userData')) { // if there's no "userData" store
+      db.createObjectStore('userData', {keyPath: 'id'}); // create it
+    }
+  };
+
+  request.onerror = function (event) {
+    console.error("An error occurred with IndexedDB");
+    console.error(event);
+  };
+
+
+  request.onsuccess = function () {
+    console.log("Database opened successfully");
+
+    const db = request.result;
+
+    var tx = db.transaction("userData", "readwrite");
+
+    return tx.complete;
+  };
+};
+
+
 const AllEmployee = () => {
   // Use context to access shared state and functions
   const {
@@ -42,12 +79,13 @@ const AllEmployee = () => {
 
   // Retrieve all data from IndexedDB on component mount
   useEffect(() => {
-    getAllData(setAllUsers);
+    insertDataInIndexedDb()
+    getAllData();
   }, []);
 
   // Function to retrieve all data from IndexedDB
   const getAllData = () => {
-    const dbPromise = idb.open("test-db", 1);
+    const dbPromise = idb.open("test-db1", 1);
     dbPromise.onsuccess = () => {
       const db = dbPromise.result;
 
@@ -64,10 +102,9 @@ const AllEmployee = () => {
       };
     };
   };
-
   // Function to delete a selected user
   const deleteSelected = (user) => {
-    const dbPromise = idb.open("test-db", 1);
+    const dbPromise = idb.open("test-db1", 1);
 
     dbPromise.onsuccess = function () {
       const db = dbPromise.result;

@@ -54,6 +54,16 @@ const Datepicker = ({ selectedDayStart, selectedDayEnd, onChangeStart, onChangeE
     setIsDateEnd(false);
   };
 
+  const handleStartCancel = () => {
+    setStartDateValue("");
+    setIsDateStart(false);
+  }
+
+  const handleEndCancel = () => {
+    setEndDateValue("");
+    setIsDateEnd(false);
+  }
+
   return (
     <>
       <div className="date-container">
@@ -104,9 +114,7 @@ const Datepicker = ({ selectedDayStart, selectedDayEnd, onChangeStart, onChangeE
               {/* Cancel and Save buttons */}
               <button
                 type="button"
-                onClick={() => {
-                  setIsDateStart(false);
-                }}
+                onClick={handleStartCancel}
                 style={{
                   cursor: "pointer",
                   border: "#0fbcf9",
@@ -169,9 +177,7 @@ const Datepicker = ({ selectedDayStart, selectedDayEnd, onChangeStart, onChangeE
               {/* Cancel and Save buttons */}
               <button
                 type="button"
-                onClick={() => {
-                  setIsDateEnd(false);
-                }}
+                onClick={handleEndCancel}
                 style={{
                   cursor: "pointer",
                   border: "#0fbcf9",
